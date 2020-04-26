@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import TodoList from './TodoList';
+import store from '../store';
 
-const AddTodoForm = ({onAddTodo}) => {
+const AddTodoForm = () => {
   const [text, setText] = useState('');
 
   const onChangeHandler = e => setText(e.target.value);
 
-  const onAddTodoHandler = () => onAddTodo(text);
+  const onAddTodoHandler = () => store.addTodo(text);
 
   return (
     <div className="row">
@@ -17,7 +17,7 @@ const AddTodoForm = ({onAddTodo}) => {
               <label htmlFor="first_name">New Todo</label>
           </div>
         </div>
-        <p className="waves-effect waves-light btn" onClick={onAddTodoHandler}>button</p>
+        <p className="waves-effect waves-light btn" onClick={onAddTodoHandler}>Add Todo</p>
       </form>
     </div>
   );

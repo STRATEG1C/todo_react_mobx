@@ -1,5 +1,6 @@
 import React from 'react';
 import store from '../store';
+import { observer } from 'mobx-react';
 
 const Todo = ({item}) => {
   const onComplete = () => {
@@ -8,6 +9,10 @@ const Todo = ({item}) => {
 
   const onResume = () => {
     return store.resumeTodo(item.id);
+  }
+
+  const onRemove = () => {
+    return store.removeTodo(item.id);
   }
 
   return (
@@ -21,7 +26,7 @@ const Todo = ({item}) => {
           </div>
           <div className="card-action">
             {item.complete ? <button onClick={onResume}>Resume</button> : <button onClick={onComplete}>Complete</button>}
-            <button>Edit</button>
+            <button onClick={onRemove}>Remove</button>
           </div>
         </div>
       </div>
@@ -29,4 +34,4 @@ const Todo = ({item}) => {
   );
 }
 
-export default Todo;
+export default observer(Todo);

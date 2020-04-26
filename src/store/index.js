@@ -1,6 +1,8 @@
-import { observable, action, decorate } from 'mobx';
+import { observable, action, decorate, computed } from 'mobx';
 
 class Store {
+  filter = false;
+
   todoList = [
     {
       id: 1,
@@ -14,6 +16,22 @@ class Store {
     }
   ];
 
+  get filteredTodoList() {
+    return this.filter ? this.todoList.filter(todo => !todo.complete) : this.todoList;
+  }
+
+  onFilter() {
+    this.filter = !this.filter;
+  }
+
+  addTodo(text) {
+    this.todoList.push({
+      id: this.todoList.length + 1,
+      text,
+      complete: false,
+    });
+  }
+
   completeTodo(id) {
     this.todoList.find(todo => todo.id === id).complete = true;
   }
@@ -21,12 +39,21 @@ class Store {
   resumeTodo(id) {
     this.todoList.find(todo => todo.id === id).complete = false;
   }
+
+  removeTodo(id) {
+    this.todoList = this.todoList.filter(todo => todo.id !== id);
+  }
 }
 
 decorate(Store, {
   todoList: observable,
-  getTodoList: action.bound,
-  completeTodo: action
+  filter: observable,
+  filteredTodoList: computed,
+  completeTodo: action,
+  resumeTodo: action,
+  removeTodo: action,
+  addTodo: action,
+  onFilter: action,
 });
 
 export default new Store();

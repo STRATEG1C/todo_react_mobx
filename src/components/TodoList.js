@@ -1,5 +1,6 @@
 import React from 'react';
 import Todo from './Todo';
+import { observer } from 'mobx-react';
 
 const TodoList = ({todoList}) => {
   return (
@@ -9,4 +10,4 @@ const TodoList = ({todoList}) => {
   );
 }
 
-export default TodoList;
+export default observer(TodoList);
